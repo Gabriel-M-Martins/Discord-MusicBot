@@ -24,8 +24,8 @@ class Queue:
         #     self.queue.pop(len(self.queue)-1)
 
     def next(self):
-        if (self.current_music_title, self.current_music_url) in self.queue:
-            index = self.queue.index((self.current_music_title, self.current_music_url)) + 1
+        if (self.current_music_title, self.current_music_url, self.current_music_thumb) in self.queue:
+            index = self.queue.index((self.current_music_title, self.current_music_url, self.current_music_thumb)) + 1
             if len(self.queue) - 1 >= index:
                 if self.current_music_title == self.queue[index][0] and len(self.queue) - 1 > index + 1:
                     self.current_music_title = self.queue[index + 1][0]
@@ -39,8 +39,7 @@ class Queue:
             self.clear_queue()
 
     def theres_next(self):
-        if self.queue.index((self.current_music_title, self.current_music_url)) + 1 > len(self.queue) - 1:
-            self.clear_queue()
+        if self.queue.index((self.current_music_title, self.current_music_url, self.current_music_thumb)) + 1 > len(self.queue) - 1:
             return False
         else:
             return True

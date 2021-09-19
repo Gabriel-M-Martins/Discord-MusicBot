@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 from requests import get
 import youtube_dl
 
-import main
 import utilities
 
 load_dotenv()
@@ -37,12 +36,30 @@ def check_session(ctx):
         return session
 
 
-def continue_queue(ctx):
-    fut = asyncio.run_coroutine_threadsafe(skip(ctx, internal=True), bot.loop)
+def prepare_continue_queue(ctx):
+    fut = asyncio.run_coroutine_threadsafe(continue_queue(ctx), bot.loop)
     try:
         fut.result()
     except Exception as e:
+        print("\n\n O erro tá na função de preparar a continuação da queue. Also:")
         print(e)
+
+
+async def continue_queue(ctx):
+    session = check_session(ctx)
+    if not session.q.theres_next():
+        print("\n\n O problema era aqui quando chama e não tem nada na fila...\n")
+        return
+
+    session.q.next()
+
+    voice = discord.utils.get(bot.voice_clients, guild=session.guild)
+    source = await discord.FFmpegOpusAudio.from_probe(session.q.current_music_url, **FFMPEG_OPTIONS)
+
+    if voice.is_playing():
+        voice.stop()
+
+    voice.play(source, after=lambda e: prepare_continue_queue(ctx))
 
 
 @bot.command(name='play')
@@ -74,8 +91,6 @@ async def play(ctx, *, arg):
     title = info['title']
 
     session.q.enqueue(title, url, thumb)
-    for i in session.q.queue:
-        print(i[0])
 
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     if not voice:
@@ -91,23 +106,24 @@ async def play(ctx, *, arg):
         await ctx.send(f"Tocando agora: {title}")
 
         source = await discord.FFmpegOpusAudio.from_probe(url, **FFMPEG_OPTIONS)
-        voice.play(source, after=lambda e: continue_queue(ctx))
+        voice.play(source, after=lambda ee: prepare_continue_queue(ctx))
 
 
 @bot.command(name='next', aliases=['skip'])
-async def skip(ctx, internal=False):
+async def skip(ctx):
     session = check_session(ctx)
     session.q.next()
 
     voice = discord.utils.get(bot.voice_clients, guild=session.guild)
     source = await discord.FFmpegOpusAudio.from_probe(session.q.current_music_url, **FFMPEG_OPTIONS)
-    print(source)
 
     if voice.is_playing():
         voice.stop()
-        voice.play(source, after=lambda e: continue_queue(ctx))
+        voice.play(source, after=lambda e: prepare_continue_queue(ctx))
         return
-
+    else:
+        voice.play(source, after=lambda e: prepare_continue_queue(ctx))
+        return
     # if voice.is_playing():
     #     if internal:
     #         voice.stop()
@@ -117,8 +133,6 @@ async def skip(ctx, internal=False):
     #         voice.stop()
     #         voice.play(source)
     #         return
-
-    voice.play(source, after=lambda i: main.continue_queue(ctx) if not internal else i)
 
 
 @bot.command(name='print')
