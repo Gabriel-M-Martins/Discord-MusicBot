@@ -91,7 +91,7 @@ async def play(ctx, *, arg):
         await ctx.send(f"Tocando agora: {title}")
 
         source = await discord.FFmpegOpusAudio.from_probe(url, **FFMPEG_OPTIONS)
-        voice.play(source, after=lambda i: continue_queue(ctx))
+        voice.play(source, after=lambda e: continue_queue(ctx))
 
 
 @bot.command(name='next', aliases=['skip'])
