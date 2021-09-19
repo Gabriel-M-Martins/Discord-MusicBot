@@ -12,7 +12,6 @@ import utilities
 
 load_dotenv()
 token = os.getenv('discordToken')
-server = os.getenv('discordServer')
 
 intents = discord.Intents.default()
 intents.members = True
@@ -48,7 +47,6 @@ def prepare_continue_queue(ctx):
 async def continue_queue(ctx):
     session = check_session(ctx)
     if not session.q.theres_next():
-        print("\n\n O problema era aqui quando chama e não tem nada na fila...\n")
         return
 
     session.q.next()
@@ -112,33 +110,27 @@ async def play(ctx, *, arg):
 @bot.command(name='next', aliases=['skip'])
 async def skip(ctx):
     session = check_session(ctx)
-    session.q.next()
+    if not session.q.theres_next():
+        await ctx.send("Não tem porra nenhuma na fila, mangolão")
+        return
 
     voice = discord.utils.get(bot.voice_clients, guild=session.guild)
-    source = await discord.FFmpegOpusAudio.from_probe(session.q.current_music_url, **FFMPEG_OPTIONS)
 
     if voice.is_playing():
         voice.stop()
-        voice.play(source, after=lambda e: prepare_continue_queue(ctx))
         return
     else:
+        session.q.next()
+        source = await discord.FFmpegOpusAudio.from_probe(session.q.current_music_url, **FFMPEG_OPTIONS)
         voice.play(source, after=lambda e: prepare_continue_queue(ctx))
         return
-    # if voice.is_playing():
-    #     if internal:
-    #         voice.stop()
-    #         voice.play(source, after=lambda e: next(ctx))
-    #         return
-    #     else:
-    #         voice.stop()
-    #         voice.play(source)
-    #         return
 
 
 @bot.command(name='print')
 async def print_info(ctx):
     session = check_session(ctx)
     await ctx.send(f"Session ID: {session.id}")
+    await ctx.send(f"Música atual: {session.q.current_music_title}")
     queue = [q[0] for q in session.q.queue]
     await ctx.send(f"Queue: {queue}")
 
@@ -147,6 +139,7 @@ async def print_info(ctx):
 async def leave(ctx):
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     if voice.is_connected:
+        check_session(ctx).q.clear_queue()
         await voice.disconnect()
     else:
         await ctx.send("Bot not connect, so it can't leave.")

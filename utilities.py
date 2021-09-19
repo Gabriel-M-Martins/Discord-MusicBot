@@ -16,12 +16,19 @@ class Queue:
             self.current_music_title = music_title
             self.current_music_thumb = music_thumb
 
-    # corrigir pra tirar a música da esquerda
+    # corrigir para tirar a música da esquerda
     # se tem /mus1/mus2/ na queue, quando chegar a mus2, tem que tirar a mus1 pra atual ser sempre a primeira da queue
     def dequeue(self):
         pass
         # if self.queue:
         #     self.queue.pop(len(self.queue)-1)
+
+    def previous(self):
+        index = self.queue.index((self.current_music_title, self.current_music_url, self.current_music_thumb)) - 1
+        if index > 0:
+            self.current_music_title = self.queue[index][0]
+            self.current_music_url = self.queue[index][1]
+            self.current_music_thumb = self.queue[index][2]
 
     def next(self):
         if (self.current_music_title, self.current_music_url, self.current_music_thumb) in self.queue:
