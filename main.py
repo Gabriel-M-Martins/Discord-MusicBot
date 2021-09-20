@@ -1,12 +1,10 @@
 import asyncio
 import os
-import random
 import discord
 import requests
+import youtube_dl
 from discord.ext import commands
 from dotenv import load_dotenv
-from requests import get
-import youtube_dl
 
 import utilities
 
@@ -40,13 +38,13 @@ def prepare_continue_queue(ctx):
     try:
         fut.result()
     except Exception as e:
-        print("\n\n O erro tá na função de preparar a continuação da queue. Also:")
         print(e)
 
 
 async def continue_queue(ctx):
     session = check_session(ctx)
     if not session.q.theres_next():
+        await ctx.send("Acabou a queue, brother.")
         return
 
     session.q.next()
@@ -58,6 +56,8 @@ async def continue_queue(ctx):
         voice.stop()
 
     voice.play(source, after=lambda e: prepare_continue_queue(ctx))
+    await ctx.send(session.q.current_music_thumb)
+    await ctx.send(f"Tocando agora: {session.q.current_music_title}")
 
 
 @bot.command(name='play')
