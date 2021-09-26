@@ -1,3 +1,6 @@
+from collections import namedtuple
+
+
 class Queue:
     """
     A class used to represent a queue.
@@ -48,11 +51,16 @@ class Queue:
 
     """
     def __init__(self):
-        self.current_music_url = ''
-        self.current_music_title = ''
-        self.current_music_thumb = ''
+        self.music = namedtuple('music', ('title', 'url', 'thumb'))
+        self.current_music = self.music('', '', '')
+
         self.last_title_enqueued = ''
         self.queue = []
+
+    def set_last_as_current(self):
+        index = len(self.queue) - 1
+        if index >= 0:
+            self.current_music = self.queue[index]
 
     def enqueue(self, music_title, music_url, music_thumb):
         """
@@ -68,13 +76,10 @@ class Queue:
         :return: None
         """
         if len(self.queue) > 0:
-            self.queue.append((music_title, music_url, music_thumb))
-            self.last_title_enqueued = music_title
+            self.queue.append(self.music(music_title, music_url, music_thumb))
         else:
-            self.queue.append((music_title, music_url, music_thumb))
-            self.current_music_url = music_url
-            self.current_music_title = music_title
-            self.current_music_thumb = music_thumb
+            self.queue.append(self.music(music_title, music_url, music_thumb))
+            self.current_music = self.music(music_title, music_url, music_thumb)
 
     def dequeue(self):
         pass
@@ -88,11 +93,9 @@ class Queue:
 
         :return: None
         """
-        index = self.queue.index((self.current_music_title, self.current_music_url, self.current_music_thumb)) - 1
+        index = self.queue.index(self.current_music) - 1
         if index > 0:
-            self.current_music_title = self.queue[index][0]
-            self.current_music_url = self.queue[index][1]
-            self.current_music_thumb = self.queue[index][2]
+            self.current_music = self.queue[index]
 
     def next(self):
         """
@@ -100,17 +103,14 @@ class Queue:
 
         :return: None
         """
-        if (self.current_music_title, self.current_music_url, self.current_music_thumb) in self.queue:
-            index = self.queue.index((self.current_music_title, self.current_music_url, self.current_music_thumb)) + 1
+        if self.current_music in self.queue:
+            index = self.queue.index(self.current_music) + 1
             if len(self.queue) - 1 >= index:
-                if self.current_music_title == self.queue[index][0] and len(self.queue) - 1 > index + 1:
-                    self.current_music_title = self.queue[index + 1][0]
-                    self.current_music_url = self.queue[index + 1][1]
-                    self.current_music_thumb = self.queue[index + 1][2]
+                if self.current_music.title == self.queue[index].title and len(self.queue) - 1 > index + 1:
+                    self.current_music = self.queue[index + 1]
                 else:
-                    self.current_music_title = self.queue[index][0]
-                    self.current_music_url = self.queue[index][1]
-                    self.current_music_thumb = self.queue[index][2]
+                    self.current_music = self.queue[index]
+
         else:
             self.clear_queue()
 
@@ -122,8 +122,7 @@ class Queue:
             True if there is a next song in queue.
             False if there isn't a next song in queue.
         """
-        if self.queue.index((self.current_music_title, self.current_music_url, self.current_music_thumb)) + 1\
-                > len(self.queue) - 1:
+        if self.queue.index(self.current_music) + 1 > len(self.queue) - 1:
             return False
         else:
             return True
@@ -135,9 +134,7 @@ class Queue:
         :return: None
         """
         self.queue.clear()
-        self.current_music_url = ''
-        self.current_music_title = ''
-        self.current_music_thumb = ''
+        self.current_music = self.music('', '', '')
 
 
 class Session:

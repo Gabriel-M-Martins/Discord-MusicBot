@@ -50,14 +50,14 @@ async def continue_queue(ctx):
     session.q.next()
 
     voice = discord.utils.get(bot.voice_clients, guild=session.guild)
-    source = await discord.FFmpegOpusAudio.from_probe(session.q.current_music_url, **FFMPEG_OPTIONS)
+    source = await discord.FFmpegOpusAudio.from_probe(session.q.current_music.url, **FFMPEG_OPTIONS)
 
     if voice.is_playing():
         voice.stop()
 
     voice.play(source, after=lambda e: prepare_continue_queue(ctx))
-    await ctx.send(session.q.current_music_thumb)
-    await ctx.send(f"Tocando agora: {session.q.current_music_title}")
+    await ctx.send(session.q.current_music.thumb)
+    await ctx.send(f"Tocando agora: {session.q.current_music.title}")
 
 
 @bot.command(name='play')
@@ -67,10 +67,6 @@ async def play(ctx, *, arg):
     except AttributeError as e:
         print(e)
         await ctx.send("Tu não tá conectado num canal de voz, burro")
-        return
-
-    if not voice_channel:
-        await ctx.send("Tu não tá conectado a nenhum canal de voz!")
         return
 
     session = check_session(ctx)
@@ -103,6 +99,8 @@ async def play(ctx, *, arg):
         await ctx.send(thumb)
         await ctx.send(f"Tocando agora: {title}")
 
+        session.q.set_last_as_current()
+
         source = await discord.FFmpegOpusAudio.from_probe(url, **FFMPEG_OPTIONS)
         voice.play(source, after=lambda ee: prepare_continue_queue(ctx))
 
@@ -121,7 +119,7 @@ async def skip(ctx):
         return
     else:
         session.q.next()
-        source = await discord.FFmpegOpusAudio.from_probe(session.q.current_music_url, **FFMPEG_OPTIONS)
+        source = await discord.FFmpegOpusAudio.from_probe(session.q.current_music.url, **FFMPEG_OPTIONS)
         voice.play(source, after=lambda e: prepare_continue_queue(ctx))
         return
 
@@ -130,7 +128,7 @@ async def skip(ctx):
 async def print_info(ctx):
     session = check_session(ctx)
     await ctx.send(f"Session ID: {session.id}")
-    await ctx.send(f"Música atual: {session.q.current_music_title}")
+    await ctx.send(f"Música atual: {session.q.current_music.title}")
     queue = [q[0] for q in session.q.queue]
     await ctx.send(f"Queue: {queue}")
 
