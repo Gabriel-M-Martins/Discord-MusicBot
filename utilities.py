@@ -58,6 +58,11 @@ class Queue:
         self.queue = []
 
     def set_last_as_current(self):
+        """
+        Sets last music as current.
+
+        :return: None
+        """
         index = len(self.queue) - 1
         if index >= 0:
             self.current_music = self.queue[index]
