@@ -45,6 +45,7 @@ This repo has the raw code to run a (almost) perfectly fine discord music bot. T
      3. Add a bot on "Bot" tab.
      4. Make sure the "Server members intent" option is checked on.
      5. Still on the "Bot" tab, on the right of the bot's icon, click "Copy" to copy the token to your clipboard.
+     
    - To add the bot to a server:
      1. In the [Discord Developer Portal](https://discord.com/developers/applications), open the "OAuth2" tab and roll down to "Scopes".
      2. Check the "bot" option and copy the link created underneath the scopes table.
