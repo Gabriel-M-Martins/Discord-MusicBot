@@ -56,4 +56,4 @@ This repo has the raw code to run a (almost) perfectly fine discord music bot. T
 6. Run the code on your IDE or compile to a .exe or similar, the bot is ready!
 
 
-## **Please, if you spot any mistakes/errors in this tutorial and on the code itself, send in an issue so I can fix it.
+## **Please, if you spot any mistakes/errors in this tutorial and on the code itself, send in an issue so I can fix it.**
