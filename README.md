@@ -1,5 +1,5 @@
 # Discord-MusicBot
-## A simple discord.py music bot.
+### A simple discord.py music bot.
 
 ***This bot has dependencies on FFmpeg, youtube_dl, dotenv, PyNaCl, requests and (obviously) discord.py.***
 
