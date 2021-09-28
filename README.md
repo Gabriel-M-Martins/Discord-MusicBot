@@ -38,13 +38,13 @@ This repo has the raw code to run a (almost) perfectly fine discord music bot. T
 
 4. Create a file called .env and paste in it `discordToken = 'YOUR_DISCORD_TOKEN_HERE'`.
    - To get a discord token you need to:
-     1. Enter the (Discord Developer Portal)[https://discord.com/developers/applications]
+     1. Enter the [Discord Developer Portal](https://discord.com/developers/applications)
      2. Create an application.
      3. Add a bot to it on "Bot" tab.
      4. Make sure the "Server members intent" option is checked on.
      5. Still on the "Bot" tab, on the right of the bot's icon, click "Copy" to copy the token to your clipboard.
    - To add the bot to a server:
-     1. In the (Discord Developer Portal)[https://discord.com/developers/applications], open the "OAuth2" tab and roll down to "Scopes".
+     1. In the [Discord Developer Portal](https://discord.com/developers/applications), open the "OAuth2" tab and roll down to "Scopes".
      2. Check the "bot" option anc copy the link it creates underneath the scopes table.
      3. Paste the link on your browser and choose the server you want to add the bot to. You will need to be an adm to perform this action, I think.
 
