@@ -1,7 +1,9 @@
 # Discord-MusicBot
 ### A simple discord.py music bot.
 
-***This bot has dependencies on FFmpeg, youtube_dl, dotenv, PyNaCl, requests and (obviously) discord.py.***
+It can run on multiple discord guilds at the same time, managing each session with it's correct queue and all. The only thing it doesn't do is play simultaneously in two voice channels in the same guild. I know Rythm can do it, but I didn't look into it yet to learn how it is done to implement it in this simple bot. :)
+
+***This bot has dependencies on FFmpeg, youtube_dl, dotenv, PyNaCl and (obviously) discord.py.***
 
 This repo has the raw code to run a (almost) perfectly fine discord music bot. To run it, a few steps are necessary:
 
