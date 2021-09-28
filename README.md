@@ -47,10 +47,13 @@ This repo has the raw code to run a (almost) perfectly fine discord music bot. T
      5. Still on the "Bot" tab, on the right of the bot's icon, click "Copy" to copy the token to your clipboard.
      
    - To add the bot to a server:
-     1. In the [Discord Developer Portal](https://discord.com/developers/applications), open the "OAuth2" tab and roll down to "Scopes".
+     1. In the your recently created application, open the "OAuth2" tab and scroll down to "Scopes".
      2. Check the "bot" option and copy the link created underneath the scopes table.
-     3. Paste the link on your browser and choose the server you want to add the bot to. You will need to be an adm to perform this action, I think.
+     3. Paste the link on your browser and then choose the server you want to add the bot to. You will need to be an adm in the guild to perform this action, I think.
 
 5. If you want to, feel free to read and change anything you want in the code. It was made in about 3 or 4 days upon insanity and insomnia. I recommend to translate the messages the bot sends back to the chat, currently it is on PT-BR.
 
 6. Run the code on your IDE or compile to a .exe or similar, the bot is ready!
+
+
+## **Please, if you spot any mistakes/errors in this tutorial and on the code itself, send in an issue so I can fix it.
