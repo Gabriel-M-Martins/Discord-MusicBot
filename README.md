@@ -1,9 +1,9 @@
 # Discord-MusicBot
-##A simple discord.py music bot.
+## A simple discord.py music bot.
 
 ***This bot has dependencies on FFmpeg, youtube_dl, dotenv, PyNaCl, requests and (obviously) discord.py.***
 
-This repo have the raw code to run a (almost) perfectly fine discord music bot. To run it, a few steps are necessary:
+This repo has the raw code to run a (almost) perfectly fine discord music bot. To run it, a few steps are necessary:
 
 1. Download [FFmpeg](https://ffmpeg.org/download.html) and __install__ it.
    - Depending on your OS, it will have a different way to do it. 
