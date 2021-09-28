@@ -9,8 +9,7 @@ It can run on multiple discord guilds at the same time, managing each session wi
 
 Currently the commands prefix is the forward-slash character (/). 
 
-To change it go to line 18 in [main.py](Discord-MusicBot/main.py) and change the forward-slash in it.
-`bot = commands.Bot(command_prefix='/')`
+To change it go to line 18 `bot = commands.Bot(command_prefix='/')` in [main.py](Discord-MusicBot/main.py) and change the forward-slash in it.
 
 - /play : Searchs for the author's current voice channel, joins it and plays the requested song, which can be a url to a video on YouTube or a simple search.
 - /pause : Pauses the current song.
