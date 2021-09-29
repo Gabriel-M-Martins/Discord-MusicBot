@@ -1,15 +1,16 @@
 # Discord-MusicBot
 ### A simple discord.py music bot.
 
-This bot was built upon insomnia by me. It receives a command from your discord guild and does the magic.
-It can run on multiple discord guilds at the same time, managing each session with it's correct queue and all. The only thing it doesn't do is play simultaneously in two voice channels in the same guild. I know Rythm can do it, but I didn't look into it yet to learn how it is done to implement in this simple bot. :)
+   This bot was built upon insomnia by me. It receives a command from your discord guild and does the magic. It can run on multiple discord guilds at the same time, managing each session with it's correct queue and all. The only thing it doesn't do is play simultaneously in two voice channels in the same guild. I know Rythm can do it, but I didn't look into it yet to learn how it is done to implement in this simple bot. :)
+   
+   Currently the bot doesn't disconnect from the voice channel on it's own. I will propably code it in at some point, but I'm tired for the moment lol. Feel free to send a pull request with this feature, I will gladly review and merge it.
 
 
 ## Commands:
 
 Currently the commands prefix is the forward-slash character (/). 
 
-To change it go to line 18 `bot = commands.Bot(command_prefix='/')` in [main.py](Discord-MusicBot/main.py) and change the forward-slash.
+To change it go to line 18 in [main.py](Discord-MusicBot/main.py) - `bot = commands.Bot(command_prefix='/')` - and change the forward-slash to anything you want.
 
 - /play : Searchs for the author's current voice channel, joins it and plays the requested song, which can be a url to a video on YouTube or a simple search.
 - /pause : Pauses the current song.
@@ -30,7 +31,7 @@ This repo has the raw code to run a (almost) perfectly fine discord music bot. T
      - On [Linux](https://www.tecmint.com/install-ffmpeg-in-linux/)
      - On [Mac OS X](http://jollejolles.com/install-ffmpeg-on-mac-os-x/)
  
-2. Open your favorite IDE for writing in Python, start a new project and paste the [main](Discord-MusicBot/main.py) and [utilities](Discord-MusicBot/utilities.py) on the same folder.
+2. Open your favorite IDE for writing in Python, start a new project and paste the [main](Discord-MusicBot/main.py) and [utilities](Discord-MusicBot/utilities.py) files on the same folder as the project.
 
 3. Start your venv (virtual enviroment) and pip install the following libraries:
    - [youtube_dl](https://pypi.org/project/youtube_dl/)
@@ -45,6 +46,7 @@ This repo has the raw code to run a (almost) perfectly fine discord music bot. T
      3. Add a bot on "Bot" tab.
      4. Make sure the "Server members intent" option is checked on.
      5. Still on the "Bot" tab, on the right of the bot's icon, click "Copy" to copy the token to your clipboard.
+     6. Paste it on .env.
      
    - To add the bot to a server:
      1. In the your recently created application, open the "OAuth2" tab and scroll down to "Scopes".
