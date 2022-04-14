@@ -9,17 +9,20 @@ from dotenv import load_dotenv
 import utilities
 
 load_dotenv()
-token = os.getenv('discordToken')  # Save your discord token in a .env file and link it here.
+# Save your discord token in a .env file and link it here.
+token = os.getenv('discordToken')
 
 # Set the bot intents accordingly to be able to read info about guild members etc.
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix='/')  # Change '/' to whatever prefix you want to use to call the bot on discord.
+# Change '/' to whatever prefix you want to use to call the bot on discord.
+bot = commands.Bot(command_prefix='/')
 
 # YouTube is a bitch and tries to disconnect our bot from its servers. Use this to reconnect instantly.
 # (Because of this disconnect/reconnect cycle, sometimes you will listen a sudden and brief stop)
-FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+FFMPEG_OPTIONS = {
+    'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
 # List with all the sessions currently active.
 # TODO: Terminate season after X minutes have passed without interaction.
@@ -38,7 +41,8 @@ def check_session(ctx):
         for i in sessions:
             if i.guild == ctx.guild and i.channel == ctx.author.voice.channel:
                 return i
-        session = utilities.Session(ctx.guild, ctx.author.voice.channel, id=len(sessions))
+        session = utilities.Session(
+            ctx.guild, ctx.author.voice.channel, id=len(sessions))
         sessions.append(session)
         return session
     else:
@@ -121,7 +125,8 @@ async def play(ctx, *, arg):
             requests.get(arg)
         except Exception as e:
             print(e)
-            info = ydl.extract_info(f"ytsearch:{arg}", download=False)['entries'][0]
+            info = ydl.extract_info(f"ytsearch:{arg}", download=False)[
+                'entries'][0]
         else:
             info = ydl.extract_info(arg, download=False)
 
