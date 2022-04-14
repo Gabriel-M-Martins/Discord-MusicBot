@@ -1,0 +1,4 @@
+discBot/
+__pycache__/
+
+*.env
