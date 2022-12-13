@@ -13,7 +13,7 @@ load_dotenv()
 token = os.getenv('discordToken')
 
 # Set the bot intents accordingly to be able to read info about guild members etc.
-intents = discord.Intent(intents = discord.Intents(messages=True, guilds=True, members=True, message_content=True, presences=True)
+intents = discord.Intents(messages=True, guilds=True, members=True, message_content=True, presences=True)
 
 # Change '/' to whatever prefix you want to use to call the bot on discord.
 bot = commands.Bot(command_prefix='/', intents=intents)
