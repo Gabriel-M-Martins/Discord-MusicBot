@@ -13,11 +13,10 @@ load_dotenv()
 token = os.getenv('discordToken')
 
 # Set the bot intents accordingly to be able to read info about guild members etc.
-intents = discord.Intents.default()
-intents.members = True
+intents = discord.Intents(messages=True, guilds=True, members=True, message_content=True, presences=True)
 
 # Change '/' to whatever prefix you want to use to call the bot on discord.
-bot = commands.Bot(command_prefix='/')
+bot = commands.Bot(command_prefix='/', intents=intents)
 
 # YouTube is a bitch and tries to disconnect our bot from its servers. Use this to reconnect instantly.
 # (Because of this disconnect/reconnect cycle, sometimes you will listen a sudden and brief stop)
